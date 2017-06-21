@@ -3,6 +3,9 @@ const name = process.argv[2];
 
 function findUser(done) {
     db.connect((error, client) => {
+        if (error) {
+        return console.log("Connection Error", error);
+        }
         client.query("SELECT * FROM famous_people WHERE last_name = $1::text OR first_name = $1::text", [name], (err, result) =>{
             done(result.rows);
             client.end();
